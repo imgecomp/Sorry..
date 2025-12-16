@@ -135,14 +135,18 @@
         .hint { margin-top: 80px; color: #bcaaa4; font-size: 0.9rem; animation: pulse 2s infinite; }
         @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
 
+        /* Music Toggle Button */
+        .music-btn { position: fixed; top: 20px; right: 20px; background: rgba(255,255,255,0.8); border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; font-size: 20px; }
     </style>
 </head>
 <body>
-    <!-- 🎵 DEMO MUSIC (Working Online URL) -->
-    <!-- Later replace 'https://...' with 'song.mp3' -->
+    <!-- 🎵 YOUR AUDIO FILE HERE -->
     <audio id="bg-music" loop>
-        <source src="song.mp3" type="audio/mp3">
+        <source src="song.mp3" type="audio/mp3"> <!-- Make sure 'song.mp3' is correct! -->
     </audio>
+
+    <!-- Music Toggle Button (Top Right) -->
+    <button class="music-btn" onclick="toggleMusic()" id="musicToggleBtn">🔇</button>
 
     <!-- Global Background Hearts -->
     <div class="floating-heart" style="top: 10%; left: 10%; font-size: 40px; transform: rotate(-15deg);">♡</div>
@@ -162,7 +166,8 @@
             </div>
             <h1>Hey Cutiepie</h1>
             <p>Can we talk for a moment? There's something important I want to tell you.</p>
-            <button class="btn" onclick="nextPage(2)">Continue ♥</button>
+            <!-- Clicking this ALSO tries to start music -->
+            <button class="btn" onclick="playMusic(); nextPage(2)">Continue ♥</button>
         </div>
     </div>
 
@@ -203,7 +208,7 @@
             <div class="image-container">
                 <div class="flower flower-left">✿</div>
                 <div class="flower flower-right">✿</div>
-                <img src="happy.gif" alt="Happy Cat" class="character-img">
+                <img src="celebrate.gif" alt="Happy Cat" class="character-img">
             </div>
             <h1>Yay! ❤️</h1>
             <p>Thank you for forgiving me! I love you so much!</p>
@@ -248,17 +253,28 @@
     <script>
         let confettiInterval = null; 
 
-        function nextPage(pageNumber) {
-            // FORCE MUSIC PLAY ON FIRST BUTTON CLICK
-            if (pageNumber === 2) {
-                var music = document.getElementById('bg-music');
-                music.volume = 0.5;
-                // Force play
-                music.play().catch(function(error) {
-                    console.log("Music play blocked by browser:", error);
-                });
-            }
+        // 1. Play Music Function
+        function playMusic() {
+            var music = document.getElementById('bg-music');
+            music.volume = 0.5;
+            music.play().then(() => {
+                document.getElementById('musicToggleBtn').innerText = "🔊"; // Change icon to Unmuted
+            }).catch(e => console.log("Music failed:", e));
+        }
 
+        // 2. Toggle Music Button
+        function toggleMusic() {
+            var music = document.getElementById('bg-music');
+            if (music.paused) {
+                playMusic();
+            } else {
+                music.pause();
+                document.getElementById('musicToggleBtn').innerText = "🔇";
+            }
+        }
+
+        // 3. Navigation
+        function nextPage(pageNumber) {
             if (pageNumber === 5) stopCelebration();
 
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
@@ -345,4 +361,4 @@
         }
     </script>
 </body>
-</html>                                    
+</html>
