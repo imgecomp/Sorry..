@@ -138,10 +138,10 @@
     </style>
 </head>
 <body>
-    <!-- 🎵 HIDDEN AUDIO PLAYER -->
+    <!-- 🎵 DEMO MUSIC (Working Online URL) -->
+    <!-- Later replace 'https://...' with 'song.mp3' -->
     <audio id="bg-music" loop>
         <source src="song.mp3" type="audio/mp3">
-        Your browser does not support the audio element.
     </audio>
 
     <!-- Global Background Hearts -->
@@ -249,14 +249,13 @@
         let confettiInterval = null; 
 
         function nextPage(pageNumber) {
-            // FORCE MUSIC PLAY ON FIRST INTERACTION
-            if (pageNumber === 1) {
+            // FORCE MUSIC PLAY ON FIRST BUTTON CLICK
+            if (pageNumber === 2) {
                 var music = document.getElementById('bg-music');
-                music.volume = 1; // Set volume to 50%
-                music.play().then(() => {
-                    console.log("Music playing successfully!");
-                }).catch(error => {
-                    console.log("Music failed to play:", error);
+                music.volume = 0.5;
+                // Force play
+                music.play().catch(function(error) {
+                    console.log("Music play blocked by browser:", error);
                 });
             }
 
@@ -290,7 +289,6 @@
             fire(0.2, { spread: 60 });
             
             confettiInterval = true;
-            
             var end = Date.now() + (15 * 1000); 
 
             (function frame() {
@@ -347,4 +345,4 @@
         }
     </script>
 </body>
-</html>
+</html>                                    
