@@ -58,8 +58,8 @@
         /* --- CARDS --- */
         .card {
             background-color: #fffafb;
-            width: 360px;
-            padding: 30px;
+            width: 340px;          /* was 360px */
+            padding: 26px;         /* was 30px */
             border-radius: 35px;
             box-shadow: 0 10px 25px rgba(235, 180, 190, 0.4);
             text-align: center;
@@ -70,18 +70,22 @@
 
         .image-container {
             width: 100%;
-            height: 185px;
+            height: 170px;         /* was 185px */
             background: linear-gradient(to bottom, #ffe6ee, #fff0f5);
             border-radius: 25px;
             display: flex;
             justify-content: center;
             align-items: flex-end;
-            margin-bottom: 25px;
+            margin-bottom: 22px;   /* was 25px */
             border: 2px solid #fff;
             position: relative;
         }
 
-        .character-img { width: 130px; height: auto; margin-bottom: 15px; }
+        .character-img { 
+            width: 120px;          /* was 130px */
+            height: auto; 
+            margin-bottom: 12px;   /* was 15px */
+        }
 
         /* --- FLOWER DECORATIONS --- */
         .flower { position: absolute; font-size: 24px; color: #ff8fab; bottom: 30px; }
@@ -132,11 +136,35 @@
         /* Envelope Styles */
         .envelope-wrapper { position: relative; cursor: pointer; animation: floatEnvelope 3s ease-in-out infinite; }
         .envelope-wrapper.open { animation: none; cursor: default; }
-        .envelope { width: 360px; height: 250px; background: #ff8fab; position: relative; border-radius: 0 0 15px 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); z-index: 2; }
-        .front-pocket { position: absolute; bottom: 0; left: 0; width: 0; height: 0; border-left: 180px solid transparent; border-right: 180px solid transparent; border-bottom: 150px solid #f06292; border-radius: 0 0 15px 15px; z-index: 3; }
-        .flap { position: absolute; top: 0; left: 0; width: 0; height: 0; border-left: 180px solid transparent; border-right: 180px solid transparent; border-top: 150px solid #ffb2c1; transform-origin: top; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); z-index: 4; }
+        .envelope { 
+            width: 340px;          /* was 360px */
+            height: 240px;         /* was 250px */
+            background: #ff8fab; position: relative; 
+            border-radius: 0 0 15px 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); z-index: 2; 
+        }
+        .front-pocket { 
+            position: absolute; bottom: 0; left: 0; width: 0; height: 0; 
+            border-left: 170px solid transparent;  /* was 180px */
+            border-right: 170px solid transparent; /* was 180px */
+            border-bottom: 145px solid #f06292;    /* was 150px */
+            border-radius: 0 0 15px 15px; z-index: 3; 
+        }
+        .flap { 
+            position: absolute; top: 0; left: 0; width: 0; height: 0; 
+            border-left: 170px solid transparent;  /* was 180px */
+            border-right: 170px solid transparent; /* was 180px */
+            border-top: 145px solid #ffb2c1;       /* was 150px */
+            transform-origin: top; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); z-index: 4; 
+        }
         .seal { position: absolute; top: 100px; left: 50%; transform: translateX(-50%); width: 50px; height: 50px; background: radial-gradient(circle at 30% 30%, #ffd700, #b8860b); border-radius: 50%; border: 2px solid #daa520; display: flex; align-items: center; justify-content: center; z-index: 5; color: #8b4513; font-size: 24px; transition: opacity 0.3s; }
-        .letter-content { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 330px; height: 230px; background: #fff; padding: 30px 20px; border-radius: 10px; text-align: center; z-index: 1; transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55); background-image: linear-gradient(#f1f1f1 1px, transparent 1px); background-size: 100% 1.5em; }
+        .letter-content { 
+            position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); 
+            width: 310px;          /* was 330px */
+            height: 220px;         /* was 230px */
+            background: #fff; padding: 30px 20px; border-radius: 10px; text-align: center; z-index: 1; 
+            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55); 
+            background-image: linear-gradient(#f1f1f1 1px, transparent 1px); background-size: 100% 1.5em; 
+        }
         
         @keyframes floatEnvelope { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         .envelope-wrapper.open .flap { transform: rotateX(180deg); z-index: 1; }
@@ -241,7 +269,7 @@
 
     <!-- PAGE 5: MEMORIES -->
     <div id="page5" class="page">
-        <div class="card" style="width: 400px;">
+        <div class="card" style="width: 380px;">  <!-- was 400px -->
             <h1>Remember this?</h1>
             <div class="photo-frame">
                 <!-- Replace photos here -->
@@ -429,3 +457,4 @@
     </script>
 </body>
 </html>
+        
