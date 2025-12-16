@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        /* --- GLOBAL STYLES --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background: linear-gradient(180deg, #fff9e6 0%, #ffe6ee 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Quicksand', sans-serif;
+            overflow: hidden;
+        }
+
+        .page {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        .active-page { display: flex; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background-color: #fffafb;
+            width: 320px;
+            padding: 25px;
+            border-radius: 35px;
+            box-shadow: 0 10px 25px rgba(235, 180, 190, 0.4);
+            text-align: center;
+            border: 4px solid #fff;
+            position: relative;
+            z-index: 10;
+        }
+
+        .image-container {
+            width: 100%;
+            height: 160px;
+            background: linear-gradient(to bottom, #ffe6ee, #fff0f5);
+            border-radius: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            margin-bottom: 20px;
+            border: 2px solid #fff;
+            position: relative;
+        }
+
+        .character-img { width: 110px; height: auto; margin-bottom: 10px; }
+
+        /* --- FLOWER DECORATIONS --- */
+        .flower { position: absolute; font-size: 20px; color: #ff8fab; bottom: 30px; }
+        .flower-left { left: 30px; }
+        .flower-right { right: 30px; }
+
+        h1, h2 { font-family: 'Dancing Script', cursive; color: #5d4037; margin-bottom: 10px; }
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        
+        p { color: #8d6e63; font-size: 1rem; line-height: 1.5; margin-bottom: 25px; font-weight: 500; }
+
+        .btn {
+            background-color: #e6c5d6;
+            color: #4a3b3b;
+            padding: 12px 35px;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-family: 'Quicksand', sans-serif;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s, background 0.2s;
+            font-size: 1rem;
+        }
+        .btn:hover { transform: scale(1.05); background-color: #dcb0c5; }
+
+        .btn-container { display: flex; justify-content: center; gap: 15px; }
+        .btn-no { background-color: #f0f0f0; color: #555; position: relative; }
+
+        /* Polaroid Styles */
+        .photo-frame {
+            width: 100%;
+            height: 220px;
+            background: #fff;
+            padding: 10px 10px 40px 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transform: rotate(-2deg);
+            margin-bottom: 25px;
+            position: relative;
+            transition: transform 0.3s;
+        }
+        .photo-frame:hover { transform: rotate(0deg) scale(1.02); }
+        .photo { width: 100%; height: 100%; object-fit: cover; border-radius: 2px; }
+        .photo-slide { position: absolute; top: 10px; left: 10px; right: 10px; bottom: 40px; opacity: 0; transition: opacity 1s; }
+        .photo-slide.active { opacity: 1; }
+
+        /* Envelope Styles */
+        .envelope-wrapper { position: relative; cursor: pointer; animation: floatEnvelope 3s ease-in-out infinite; }
+        .envelope-wrapper.open { animation: none; cursor: default; }
+        .envelope { width: 320px; height: 220px; background: #ff8fab; position: relative; border-radius: 0 0 15px 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); z-index: 2; }
+        .front-pocket { position: absolute; bottom: 0; left: 0; width: 0; height: 0; border-left: 160px solid transparent; border-right: 160px solid transparent; border-bottom: 130px solid #f06292; border-radius: 0 0 15px 15px; z-index: 3; }
+        .flap { position: absolute; top: 0; left: 0; width: 0; height: 0; border-left: 160px solid transparent; border-right: 160px solid transparent; border-top: 130px solid #ffb2c1; transform-origin: top; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); z-index: 4; }
+        .seal { position: absolute; top: 85px; left: 50%; transform: translateX(-50%); width: 45px; height: 45px; background: radial-gradient(circle at 30% 30%, #ffd700, #b8860b); border-radius: 50%; border: 2px solid #daa520; display: flex; align-items: center; justify-content: center; z-index: 5; color: #8b4513; font-size: 20px; transition: opacity 0.3s; }
+        .letter-content { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 290px; height: 200px; background: #fff; padding: 30px 20px; border-radius: 10px; text-align: center; z-index: 1; transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55); background-image: linear-gradient(#f1f1f1 1px, transparent 1px); background-size: 100% 1.5em; }
+        
+        @keyframes floatEnvelope { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .envelope-wrapper.open .flap { transform: rotateX(180deg); z-index: 1; }
+        .envelope-wrapper.open .seal { opacity: 0; transform: scale(0); }
+        .envelope-wrapper.open .letter-content { transform: translateX(-50%) translateY(-100px); z-index: 6; height: auto; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
+        .envelope-wrapper.open .envelope, .envelope-wrapper.open .front-pocket { transition: opacity 0.5s ease 1s; opacity: 0.6; }
+
+        .sparkle { position: absolute; width: 8px; height: 8px; background: #ffd700; border-radius: 50%; pointer-events: none; opacity: 0; z-index: 10; box-shadow: 0 0 10px #ffd700; }
+        @keyframes sparkle-anim { 0% { opacity: 1; transform: scale(0); } 50% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(0) translate(var(--tx), var(--ty)); } }
+
+        .floating-heart { position: absolute; color: #ffccd5; z-index: 1; animation: float 6s infinite ease-in-out; pointer-events: none; }
+        @keyframes float { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-20px) rotate(10deg); } }
+
+        .hint { margin-top: 80px; color: #bcaaa4; font-size: 0.9rem; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+
+    </style>
+</head>
+<body>
+    <audio id="bg-music" loop>
+        <source src="song.mp3" type="audio/mp3">
+    </audio>
+
+    <!-- Global Background Hearts -->
+    <div class="floating-heart" style="top: 10%; left: 10%; font-size: 40px; transform: rotate(-15deg);">♡</div>
+    <div class="floating-heart" style="top: 15%; right: 10%; font-size: 30px; transform: rotate(10deg);">♥</div>
+    <div class="floating-heart" style="bottom: 20%; left: 5%; font-size: 25px; transform: rotate(-5deg);">♥</div>
+    <div class="floating-heart" style="bottom: 10%; right: 20%; font-size: 50px; opacity: 0.5;">♡</div>
+    <div class="floating-heart" style="top: 50%; left: 5%; font-size: 20px; opacity: 0.6;">♥</div>
+    <div class="floating-heart" style="top: 5%; right: 40%; font-size: 35px; opacity: 0.4;">♡</div>
+
+    <!-- PAGE 1: INTRO -->
+    <div id="page1" class="page active-page">
+        <div class="card">
+            <div class="image-container">
+                <div class="flower flower-left">✿</div>
+                <div class="flower flower-right">✿</div>
+                <img src="https://media.tenor.com/WiQfFGjebm0AAAAi/cute-bear.gif" alt="Cute" class="character-img">
+            </div>
+            <h1>Hey Cutiepie</h1>
+            <p>Can we talk for a moment? There's something important I want to tell you.</p>
+            <button class="btn" onclick="nextPage(2)">Continue ♥</button>
+        </div>
+    </div>
+
+    <!-- PAGE 2: APOLOGY -->
+    <div id="page2" class="page">
+        <div class="card">
+            <div class="image-container">
+                <div class="flower flower-left">✿</div>
+                <div class="flower flower-right">✿</div>
+                <img src="https://media.tenor.com/K2s2t4a_iJcAAAAi/mochi-peach-cat-mochi-cat.gif" alt="Sad Cat" class="character-img">
+            </div>
+            <h1>I'm Sorry</h1>
+            <p>I know I hurt you... and I've been feeling really bad about it.</p>
+            <button class="btn" onclick="nextPage(3)">Next ➝</button>
+        </div>
+    </div>
+
+    <!-- PAGE 3: FORGIVE -->
+    <div id="page3" class="page">
+        <div class="card">
+            <div class="image-container">
+                <!-- ADDED FLOWERS HERE -->
+                <div class="flower flower-left">✿</div>
+                <div class="flower flower-right">✿</div>
+                
+                <img src="https://media.tenor.com/P59-y1XzL-AAAAAi/mochi-cat-pleading.gif" alt="Pleading" class="character-img">
+            </div>
+            <h2>Will you forgive me?</h2>
+            <p>I promise to be better. Please? 🥺</p>
+            <div class="btn-container">
+                <button class="btn" onclick="nextPage(4)">Yes</button>
+                <button class="btn btn-no" id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 4: CELEBRATION -->
+    <div id="page4" class="page">
+        <div class="card">
+            <div class="image-container">
+                <!-- ADDED FLOWERS HERE -->
+                <div class="flower flower-left">✿</div>
+                <div class="flower flower-right">✿</div>
+                
+                <img src="https://media.tenor.com/2s46u31y2CcAAAAi/mochi-mochi-peach-cat.gif" alt="Happy Cat" class="character-img">
+            </div>
+            <h1>Yay! ❤️</h1>
+            <p>Thank you for forgiving me! I love you so much!</p>
+            <button class="btn" onclick="nextPage(5)">Wait, look here...</button>
+        </div>
+    </div>
+
+    <!-- PAGE 5: MEMORIES -->
+    <div id="page5" class="page">
+        <div class="card" style="width: 340px;">
+            <h1>Remember this?</h1>
+            <div class="photo-frame">
+                <!-- Replace photos here -->
+                <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400" class="photo photo-slide active">
+                <img src="https://images.unsplash.com/photo-1621112904887-419379ce6824?w=400" class="photo photo-slide">
+                <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=400" class="photo photo-slide">
+            </div>
+            <p>Let's make more beautiful memories together.</p>
+            <button class="btn" onclick="nextPage(6)">My Promise ➝</button>
+        </div>
+    </div>
+
+    <!-- PAGE 6: LETTER -->
+    <div id="page6" class="page">
+        <div class="envelope-wrapper" id="envelopeWrapper" onclick="openEnvelope()">
+            <div class="envelope">
+                <div class="letter-content">
+                    <h1>My Promise</h1>
+                    <p>
+                        Thank you for forgiving me. I promise to cherish you, listen to you, and make you smile every single day. <br><br>
+                        You are my favorite person. ❤️
+                    </p>
+                </div>
+                <div class="front-pocket"></div>
+                <div class="flap"></div>
+                <div class="seal">❤</div>
+            </div>
+        </div>
+        <p class="hint" id="hint-text">Tap to open</p>
+    </div>
+
+    <script>
+        let confettiInterval = null; // Stores the animation frame ID
+
+        function nextPage(pageNumber) {
+            // STOP confetti if moving to Page 5
+            if (pageNumber === 5) {
+                stopCelebration();
+            }
+
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+            document.getElementById('page' + pageNumber).classList.add('active-page');
+
+            if (pageNumber === 2) {
+                var music = document.getElementById('bg-music');
+                music.volume = 0.5;
+                music.play().catch(console.log);
+            }
+
+            if (pageNumber === 4) startCelebration();
+            if (pageNumber === 5) startSlideshow();
+        }
+
+        function moveButton() {
+            var btn = document.getElementById('noBtn');
+            var x = Math.random() * (window.innerWidth - 100);
+            var y = Math.random() * (window.innerHeight - 50);
+            btn.style.position = 'fixed';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+        }
+
+        function startCelebration() {
+            var count = 200;
+            var defaults = { origin: { y: 0.7 }, colors: ['#ffccd5', '#ff8fab', '#e6c5d6', '#ffd700'] };
+
+            function fire(particleRatio, opts) {
+                confetti(Object.assign({}, defaults, opts, { particleCount: Math.floor(count * particleRatio) }));
+            }
+            
+            fire(0.25, { spread: 26, startVelocity: 55 });
+            fire(0.2, { spread: 60 });
+            
+            // Start continuous rain
+            confettiInterval = true;
+            
+            var end = Date.now() + (15 * 1000); 
+
+            (function frame() {
+                // Check flag to see if we should stop
+                if (confettiInterval !== true) return;
+
+                confetti({
+                    particleCount: 2, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#ffccd5', '#ffd700']
+                });
+                confetti({
+                    particleCount: 2, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#ffccd5', '#ffd700']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        }
+
+        function stopCelebration() {
+            confettiInterval = false; // Stops the loop
+            confetti.reset(); // Clears screen instantly
+        }
+
+        function startSlideshow() {
+            let slides = document.querySelectorAll('.photo-slide');
+            let currentSlide = 0;
+            setInterval(() => {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }, 3000);
+        }
+
+        function openEnvelope() {
+            const wrapper = document.getElementById('envelopeWrapper');
+            if (!wrapper.classList.contains('open')) {
+                wrapper.classList.add('open');
+                document.getElementById('hint-text').style.display = 'none';
+                createSparkles();
+            }
+        }
+
+        function createSparkles() {
+            const wrapper = document.getElementById('envelopeWrapper');
+            for (let i = 0; i < 30; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.classList.add('sparkle');
+                const x = Math.random() * 300 - 150;
+                const y = Math.random() * 100 - 50;
+                sparkle.style.setProperty('--tx', (Math.random() - 0.5) * 100 + 'px');
+                sparkle.style.setProperty('--ty', (Math.random() - 1) * 100 - 50 + 'px');
+                sparkle.style.left = `calc(50% + ${x}px)`;
+                sparkle.style.top = `calc(30% + ${y}px)`;
+                sparkle.style.animation = `sparkle-anim 1s ease-out forwards ${Math.random() * 0.5 + 0.4}s`;
+                wrapper.appendChild(sparkle);
+                setTimeout(() => sparkle.remove(), 2000);
+            }
+        }
+    </script>
+</body>
+</html>
