@@ -38,10 +38,11 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* --- INCREASED CARD SIZE --- */
         .card {
             background-color: #fffafb;
-            width: 320px;
-            padding: 25px;
+            width: 360px; /* Increased from 320px */
+            padding: 30px; /* Increased padding */
             border-radius: 35px;
             box-shadow: 0 10px 25px rgba(235, 180, 190, 0.4);
             text-align: center;
@@ -52,34 +53,34 @@
 
         .image-container {
             width: 100%;
-            height: 160px;
+            height: 185px; /* Increased from 160px */
             background: linear-gradient(to bottom, #ffe6ee, #fff0f5);
             border-radius: 25px;
             display: flex;
             justify-content: center;
             align-items: flex-end;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             border: 2px solid #fff;
             position: relative;
         }
 
-        .character-img { width: 110px; height: auto; margin-bottom: 10px; }
+        .character-img { width: 130px; height: auto; margin-bottom: 15px; } /* Slightly bigger images */
 
         /* --- FLOWER DECORATIONS --- */
-        .flower { position: absolute; font-size: 20px; color: #ff8fab; bottom: 30px; }
+        .flower { position: absolute; font-size: 24px; color: #ff8fab; bottom: 30px; }
         .flower-left { left: 30px; }
         .flower-right { right: 30px; }
 
         h1, h2 { font-family: 'Dancing Script', cursive; color: #5d4037; margin-bottom: 10px; }
-        h1 { font-size: 2.5rem; }
-        h2 { font-size: 2rem; }
+        h1 { font-size: 2.8rem; }
+        h2 { font-size: 2.2rem; }
         
-        p { color: #8d6e63; font-size: 1rem; line-height: 1.5; margin-bottom: 25px; font-weight: 500; }
+        p { color: #8d6e63; font-size: 1.1rem; line-height: 1.6; margin-bottom: 25px; font-weight: 500; }
 
         .btn {
             background-color: #e6c5d6;
             color: #4a3b3b;
-            padding: 12px 35px;
+            padding: 14px 40px;
             border: none;
             border-radius: 50px;
             font-weight: bold;
@@ -87,19 +88,19 @@
             cursor: pointer;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             transition: transform 0.2s, background 0.2s;
-            font-size: 1rem;
+            font-size: 1.1rem;
         }
         .btn:hover { transform: scale(1.05); background-color: #dcb0c5; }
 
         .btn-container { display: flex; justify-content: center; gap: 15px; }
         .btn-no { background-color: #f0f0f0; color: #555; position: relative; }
 
-        /* Polaroid Styles */
+        /* Polaroid Styles (Increased Size) */
         .photo-frame {
             width: 100%;
-            height: 220px;
+            height: 240px; /* Increased */
             background: #fff;
-            padding: 10px 10px 40px 10px;
+            padding: 12px 12px 45px 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             transform: rotate(-2deg);
             margin-bottom: 25px;
@@ -108,22 +109,46 @@
         }
         .photo-frame:hover { transform: rotate(0deg) scale(1.02); }
         .photo { width: 100%; height: 100%; object-fit: cover; border-radius: 2px; }
-        .photo-slide { position: absolute; top: 10px; left: 10px; right: 10px; bottom: 40px; opacity: 0; transition: opacity 1s; }
+        .photo-slide { position: absolute; top: 12px; left: 12px; right: 12px; bottom: 45px; opacity: 0; transition: opacity 1s; }
         .photo-slide.active { opacity: 1; }
 
-        /* Envelope Styles */
+        /* Envelope Styles (Resized to Match New Size) */
         .envelope-wrapper { position: relative; cursor: pointer; animation: floatEnvelope 3s ease-in-out infinite; }
         .envelope-wrapper.open { animation: none; cursor: default; }
-        .envelope { width: 320px; height: 220px; background: #ff8fab; position: relative; border-radius: 0 0 15px 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); z-index: 2; }
-        .front-pocket { position: absolute; bottom: 0; left: 0; width: 0; height: 0; border-left: 160px solid transparent; border-right: 160px solid transparent; border-bottom: 130px solid #f06292; border-radius: 0 0 15px 15px; z-index: 3; }
-        .flap { position: absolute; top: 0; left: 0; width: 0; height: 0; border-left: 160px solid transparent; border-right: 160px solid transparent; border-top: 130px solid #ffb2c1; transform-origin: top; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); z-index: 4; }
-        .seal { position: absolute; top: 85px; left: 50%; transform: translateX(-50%); width: 45px; height: 45px; background: radial-gradient(circle at 30% 30%, #ffd700, #b8860b); border-radius: 50%; border: 2px solid #daa520; display: flex; align-items: center; justify-content: center; z-index: 5; color: #8b4513; font-size: 20px; transition: opacity 0.3s; }
-        .letter-content { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 290px; height: 200px; background: #fff; padding: 30px 20px; border-radius: 10px; text-align: center; z-index: 1; transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55); background-image: linear-gradient(#f1f1f1 1px, transparent 1px); background-size: 100% 1.5em; }
+        
+        /* Updated Dimensions: 360px Width */
+        .envelope { width: 360px; height: 250px; background: #ff8fab; position: relative; border-radius: 0 0 15px 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); z-index: 2; }
+        
+        .front-pocket { 
+            position: absolute; bottom: 0; left: 0; width: 0; height: 0; 
+            border-left: 180px solid transparent; 
+            border-right: 180px solid transparent; 
+            border-bottom: 150px solid #f06292; 
+            border-radius: 0 0 15px 15px; z-index: 3; 
+        }
+        
+        .flap { 
+            position: absolute; top: 0; left: 0; width: 0; height: 0; 
+            border-left: 180px solid transparent; 
+            border-right: 180px solid transparent; 
+            border-top: 150px solid #ffb2c1; 
+            transform-origin: top; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); z-index: 4; 
+        }
+
+        .seal { position: absolute; top: 100px; left: 50%; transform: translateX(-50%); width: 50px; height: 50px; background: radial-gradient(circle at 30% 30%, #ffd700, #b8860b); border-radius: 50%; border: 2px solid #daa520; display: flex; align-items: center; justify-content: center; z-index: 5; color: #8b4513; font-size: 24px; transition: opacity 0.3s; }
+        
+        .letter-content { 
+            position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); 
+            width: 330px; height: 230px; 
+            background: #fff; padding: 30px 20px; border-radius: 10px; text-align: center; z-index: 1; 
+            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55); 
+            background-image: linear-gradient(#f1f1f1 1px, transparent 1px); background-size: 100% 1.5em; 
+        }
         
         @keyframes floatEnvelope { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         .envelope-wrapper.open .flap { transform: rotateX(180deg); z-index: 1; }
         .envelope-wrapper.open .seal { opacity: 0; transform: scale(0); }
-        .envelope-wrapper.open .letter-content { transform: translateX(-50%) translateY(-100px); z-index: 6; height: auto; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
+        .envelope-wrapper.open .letter-content { transform: translateX(-50%) translateY(-120px); z-index: 6; height: auto; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
         .envelope-wrapper.open .envelope, .envelope-wrapper.open .front-pocket { transition: opacity 0.5s ease 1s; opacity: 0.6; }
 
         .sparkle { position: absolute; width: 8px; height: 8px; background: #ffd700; border-radius: 50%; pointer-events: none; opacity: 0; z-index: 10; box-shadow: 0 0 10px #ffd700; }
@@ -142,10 +167,9 @@
 <body>
     <!-- 🎵 YOUR AUDIO FILE HERE -->
     <audio id="bg-music" loop>
-        <source src="song.mp3" type="audio/mp3"> <!-- Make sure 'song.mp3' is correct! -->
+        <source src="song.mp3" type="audio/mp3">
     </audio>
 
-    <!-- Music Toggle Button (Top Right) -->
     <button class="music-btn" onclick="toggleMusic()" id="musicToggleBtn">🔇</button>
 
     <!-- Global Background Hearts -->
@@ -166,7 +190,6 @@
             </div>
             <h1>Hey Cutiepie</h1>
             <p>Can we talk for a moment? There's something important I want to tell you.</p>
-            <!-- Clicking this ALSO tries to start music -->
             <button class="btn" onclick="playMusic(); nextPage(2)">Continue ♥</button>
         </div>
     </div>
@@ -208,7 +231,7 @@
             <div class="image-container">
                 <div class="flower flower-left">✿</div>
                 <div class="flower flower-right">✿</div>
-                <img src="celebrate.gif" alt="Happy Cat" class="character-img">
+                <img src="happy.gif" alt="Happy Cat" class="character-img">
             </div>
             <h1>Yay! ❤️</h1>
             <p>Thank you for forgiving me! I love you so much!</p>
@@ -218,7 +241,8 @@
 
     <!-- PAGE 5: MEMORIES -->
     <div id="page5" class="page">
-        <div class="card" style="width: 340px;">
+        <!-- Increased width for this specific card -->
+        <div class="card" style="width: 400px;">
             <h1>Remember this?</h1>
             <div class="photo-frame">
                 <!-- REPLACE THESE WITH YOUR REAL PHOTOS -->
