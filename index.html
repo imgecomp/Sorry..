@@ -138,8 +138,10 @@
     </style>
 </head>
 <body>
+    <!-- 🎵 HIDDEN AUDIO PLAYER -->
     <audio id="bg-music" loop>
         <source src="song.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
     </audio>
 
     <!-- Global Background Hearts -->
@@ -156,7 +158,7 @@
             <div class="image-container">
                 <div class="flower flower-left">✿</div>
                 <div class="flower flower-right">✿</div>
-                <img src="https://media.tenor.com/WiQfFGjebm0AAAAi/cute-bear.gif" alt="Cute" class="character-img">
+                <img src="intro.gif" alt="Cute" class="character-img">
             </div>
             <h1>Hey Cutiepie</h1>
             <p>Can we talk for a moment? There's something important I want to tell you.</p>
@@ -182,10 +184,8 @@
     <div id="page3" class="page">
         <div class="card">
             <div class="image-container">
-                <!-- ADDED FLOWERS HERE -->
                 <div class="flower flower-left">✿</div>
                 <div class="flower flower-right">✿</div>
-                
                 <img src="please.gif" alt="Pleading" class="character-img">
             </div>
             <h2>Will you forgive me?</h2>
@@ -201,11 +201,9 @@
     <div id="page4" class="page">
         <div class="card">
             <div class="image-container">
-                <!-- ADDED FLOWERS HERE -->
                 <div class="flower flower-left">✿</div>
                 <div class="flower flower-right">✿</div>
-                
-                <img src="celebrate.gif" alt="Happy Cat" class="character-img">
+                <img src="happy.gif" alt="Happy Cat" class="character-img">
             </div>
             <h1>Yay! ❤️</h1>
             <p>Thank you for forgiving me! I love you so much!</p>
@@ -218,7 +216,7 @@
         <div class="card" style="width: 340px;">
             <h1>Remember this?</h1>
             <div class="photo-frame">
-                <!-- Replace photos here -->
+                <!-- REPLACE THESE WITH YOUR REAL PHOTOS -->
                 <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400" class="photo photo-slide active">
                 <img src="https://images.unsplash.com/photo-1621112904887-419379ce6824?w=400" class="photo photo-slide">
                 <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=400" class="photo photo-slide">
@@ -248,22 +246,24 @@
     </div>
 
     <script>
-        let confettiInterval = null; // Stores the animation frame ID
+        let confettiInterval = null; 
 
         function nextPage(pageNumber) {
-            // STOP confetti if moving to Page 5
-            if (pageNumber === 5) {
-                stopCelebration();
+            // FORCE MUSIC PLAY ON FIRST INTERACTION
+            if (pageNumber === 2) {
+                var music = document.getElementById('bg-music');
+                music.volume = 0.5; // Set volume to 50%
+                music.play().then(() => {
+                    console.log("Music playing successfully!");
+                }).catch(error => {
+                    console.log("Music failed to play:", error);
+                });
             }
+
+            if (pageNumber === 5) stopCelebration();
 
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
             document.getElementById('page' + pageNumber).classList.add('active-page');
-
-            if (pageNumber === 2) {
-                var music = document.getElementById('bg-music');
-                music.volume = 5;
-                music.play().catch(console.log);
-            }
 
             if (pageNumber === 4) startCelebration();
             if (pageNumber === 5) startSlideshow();
@@ -289,31 +289,25 @@
             fire(0.25, { spread: 26, startVelocity: 55 });
             fire(0.2, { spread: 60 });
             
-            // Start continuous rain
             confettiInterval = true;
             
             var end = Date.now() + (15 * 1000); 
 
             (function frame() {
-                // Check flag to see if we should stop
                 if (confettiInterval !== true) return;
-
                 confetti({
                     particleCount: 2, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#ffccd5', '#ffd700']
                 });
                 confetti({
                     particleCount: 2, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#ffccd5', '#ffd700']
                 });
-
-                if (Date.now() < end) {
-                    requestAnimationFrame(frame);
-                }
+                if (Date.now() < end) requestAnimationFrame(frame);
             }());
         }
 
         function stopCelebration() {
-            confettiInterval = false; // Stops the loop
-            confetti.reset(); // Clears screen instantly
+            confettiInterval = false; 
+            confetti.reset(); 
         }
 
         function startSlideshow() {
