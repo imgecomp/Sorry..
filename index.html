@@ -250,9 +250,9 @@
 
         function nextPage(pageNumber) {
             // FORCE MUSIC PLAY ON FIRST INTERACTION
-            if (pageNumber === 2) {
+            if (pageNumber === 1) {
                 var music = document.getElementById('bg-music');
-                music.volume = 0.5; // Set volume to 50%
+                music.volume = 1; // Set volume to 50%
                 music.play().then(() => {
                     console.log("Music playing successfully!");
                 }).catch(error => {
